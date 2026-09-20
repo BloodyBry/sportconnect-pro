@@ -1,0 +1,44 @@
+<%- include("../partials/header", { pageTitle }) %>
+<a href="/activities/new">Ajouter une activité</a>
+
+<h1>Catalogue des activités</h1>
+
+<% if (activities.length === 0) { %>
+    <p>Aucune activité disponible.</p>
+<% } else { %>
+    <ul>
+        <% activities.forEach((activity) => { %>
+            <li>
+                <h2><%= activity.name %></h2>
+
+                <p><%= activity.description %></p>
+
+                <p>
+                    Sport : <%= activity.sport %>
+                </p>
+
+                <p>
+                    Âge : de <%= activity.min_age %>
+                    à <%= activity.max_age %> ans
+                </p>
+
+                <p>
+                    Prix :
+                    <%= Number(activity.base_price).toFixed(2) %>
+                    MAD
+                </p>
+
+                <p>
+                    Certificat médical :
+                    <%= activity.medical_certificate_required
+                        ? "Obligatoire"
+                        : "Non obligatoire" %>
+                </p>
+            </li>
+        <% }); %>
+    </ul>
+<% } %>
+
+<a href="/">Retour à l’accueil</a>
+
+<%- include("../partials/footer") %>
