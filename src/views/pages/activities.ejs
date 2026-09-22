@@ -1,17 +1,24 @@
 <%- include("../partials/header", { pageTitle }) %>
+
 <a href="/activities/new">Ajouter une activité</a>
 
 <h1>Catalogue des activités</h1>
 
 <% if (activities.length === 0) { %>
+
     <p>Aucune activité disponible.</p>
+
 <% } else { %>
+
     <ul>
         <% activities.forEach((activity) => { %>
+
             <li>
                 <h2><%= activity.name %></h2>
 
-                <p><%= activity.description %></p>
+                <p>
+                    <%= activity.description || "Aucune description" %>
+                </p>
 
                 <p>
                     Sport : <%= activity.sport %>
@@ -34,9 +41,28 @@
                         ? "Obligatoire"
                         : "Non obligatoire" %>
                 </p>
+
+                <a href="/activities/<%= activity.id %>/edit">
+                    Modifier
+                </a>
+
+                <form
+                    action="/activities/<%= activity.id %>/deactivate"
+                    method="POST"
+                    onsubmit="return confirm(
+                        'Voulez-vous vraiment désactiver cette activité ?'
+                    );"
+                >
+                    <button type="submit">
+                        Désactiver
+                    </button>
+                </form>
+
             </li>
+
         <% }); %>
     </ul>
+
 <% } %>
 
 <a href="/">Retour à l’accueil</a>

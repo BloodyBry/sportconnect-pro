@@ -1,70 +1,98 @@
 <%- include("../partials/header", { pageTitle }) %>
 
+<h1>Modifier une activité</h1>
+
 <% if (error) { %>
-    <p><%= error %></p>
+    <p class="error-message">
+        <%= error %>
+    </p>
 <% } %>
 
-<h1>Ajouter une activité</h1>
-
-<form action="/activities" method="POST">
+<form
+    action="/activities/<%= activity.id %>/edit"
+    method="POST"
+>
     <div>
-        <label for="name">Nom</label>
+        <label for="name">
+            Nom de l’activité
+        </label>
+
         <input
             type="text"
             id="name"
             name="name"
+            value="<%= activity.name %>"
             required
         >
     </div>
 
     <div>
-        <label for="description">Description</label>
+        <label for="description">
+            Description
+        </label>
+
         <textarea
             id="description"
             name="description"
-        ></textarea>
+        ><%= activity.description || "" %></textarea>
     </div>
 
     <div>
-        <label for="sport">Sport</label>
+        <label for="sport">
+            Sport
+        </label>
+
         <input
             type="text"
             id="sport"
             name="sport"
+            value="<%= activity.sport %>"
             required
         >
     </div>
 
     <div>
-        <label for="min_age">Âge minimum</label>
+        <label for="min_age">
+            Âge minimum
+        </label>
+
         <input
             type="number"
             id="min_age"
             name="min_age"
             min="0"
+            value="<%= activity.min_age %>"
             required
         >
     </div>
 
     <div>
-        <label for="max_age">Âge maximum</label>
+        <label for="max_age">
+            Âge maximum
+        </label>
+
         <input
             type="number"
             id="max_age"
             name="max_age"
             min="0"
+            value="<%= activity.max_age %>"
             required
         >
     </div>
 
     <div>
-        <label for="base_price">Prix</label>
+        <label for="base_price">
+            Prix de base
+        </label>
+
         <input
             type="number"
             id="base_price"
             name="base_price"
             min="0"
             step="0.01"
+            value="<%= Number(activity.base_price).toFixed(2) %>"
             required
         >
     </div>
@@ -74,14 +102,22 @@
             <input
                 type="checkbox"
                 name="medical_certificate_required"
+                <% if (activity.medical_certificate_required) { %>
+                    checked
+                <% } %>
             >
+
             Certificat médical obligatoire
         </label>
     </div>
 
-    <button type="submit">Enregistrer</button>
-</form>
+    <button type="submit">
+        Enregistrer les modifications
+    </button>
 
-<a href="/activities">Annuler</a>
+    <a href="/activities">
+        Annuler
+    </a>
+</form>
 
 <%- include("../partials/footer") %>
